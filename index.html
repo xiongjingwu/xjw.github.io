@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>XJW</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="XJW">
+<meta property="og:url" content="http://example.com/index.html">
+<meta property="og:site_name" content="XJW">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="XJW" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">XJW</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/11/26/hello-world/" class="article-date">
+  <time class="dt-published" datetime="2023-11-26T15:30:37.349Z" itemprop="datePublished">2023-11-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/11/26/hello-world/">XJW</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="C-11"><a href="#C-11" class="headerlink" title="C++11"></a>C++11</h1><h1 id="智能指针"><a href="#智能指针" class="headerlink" title="智能指针"></a>智能指针</h1><p>std::shared_ptr ,  允许多个指针指向同一个对象</p>
+<p>std::unique_ptr， 独占所指向的对象</p>
+<ul>
+<li>它不能与其他unique_ptr类型的指针对象共享所指对象的内存。</li>
+<li>所有权仅能够通过std::move函数来转移。</li>
+<li>删除了拷贝构造函数、保留了移动构造函数的指针封装类型。</li>
+<li>调用release 会切断unique_ptr 和它原来管理的对象的联系</li>
+<li>release 返回的指针通常被用来初始化另一个智能指针或给另一个智能指针赋值。如果不用另一个智能指针来保存release返回的指针，程序就要负责资源的释放。</li>
+</ul>
+<p>unique_ptr不支持拷贝操作，但有个例外：可以从函数中返回一个unique_ptr （编译器优化？）</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">unique_ptr&lt;<span class="type">int</span>&gt; <span class="title">pass_through</span><span class="params">(unique_ptr&lt;<span class="type">int</span>&gt; p)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> p;</span><br><span class="line">&#125;</span><br><span class="line">unique_ptr&lt;<span class="type">int</span>&gt; q = <span class="built_in">pass_through</span>(std::<span class="built_in">move</span>(p)); <span class="comment">// 参数不支持copy，必须move</span></span><br></pre></td></tr></table></figure>
+
+<p>用法示例</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;memory&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="function">std::unique_ptr&lt;<span class="type">int</span>&gt; <span class="title">uptr</span><span class="params">(<span class="keyword">new</span> <span class="type">int</span>(<span class="number">10</span>))</span></span>;  <span class="comment">//绑定动态对象</span></span><br><span class="line">  std::unique_ptr&lt;<span class="type">int</span>&gt; uptr = std::<span class="built_in">make_unique</span>&lt;<span class="type">int</span>&gt;(<span class="number">10</span>);  <span class="comment">// c++17才支持make_unique</span></span><br><span class="line">  <span class="comment">//std::unique_ptr&lt;int&gt; uptr2 = uptr;  //不能賦值</span></span><br><span class="line">  <span class="comment">//std::unique_ptr&lt;int&gt; uptr2(uptr);  //不能拷内</span></span><br><span class="line">  std::unique_ptr&lt;<span class="type">int</span>&gt; uptr2 = std::<span class="built_in">move</span>(uptr); <span class="comment">//只能move，move意味着所有权转换</span></span><br><span class="line">	<span class="comment">// std::unique_ptr&lt;int&gt; p3(std::move(uptr2));</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>(uptr == <span class="literal">nullptr</span>)</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">&quot;uptr give up *int\n&quot;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="type">int</span> * p = uptr2.<span class="built_in">release</span>(); <span class="comment">//uptr2释放对指针的控制权，返回指针，并将uptr2置为空</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>(uptr2 == <span class="literal">nullptr</span>)</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;uptr2 give up *int\n&quot;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, *p);</span><br><span class="line">  <span class="keyword">delete</span> p;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 管理动态数组</span></span><br><span class="line"><span class="function">unique_ptr&lt;<span class="type">int</span>[]&gt; <span class="title">p</span><span class="params">(<span class="keyword">new</span> <span class="type">int</span>[<span class="number">5</span>] &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Foo</span>;</span><br><span class="line"><span class="function">std::unique_ptr&lt;Foo[]&gt; <span class="title">p1</span><span class="params">(<span class="keyword">new</span> Foo[<span class="number">4</span>])</span></span>;</span><br><span class="line">p1[<span class="number">0</span>].<span class="built_in">memberFunc</span>();</span><br></pre></td></tr></table></figure>
+
+<h1 id="可调用对象"><a href="#可调用对象" class="headerlink" title="可调用对象"></a>可调用对象</h1><ul>
+<li>函数指针</li>
+<li>具有 operator() 成员函数的类的对象 (注意是对象)</li>
+<li>可被转换为函数指针的类对象</li>
+<li>类成员函数指针</li>
+<li>lambda 表达式</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 普通函数</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">add</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span></span>&#123;<span class="keyword">return</span> a+b;&#125;</span><br><span class="line"><span class="comment">// lambda表达式</span></span><br><span class="line"><span class="keyword">auto</span> mod = [](<span class="type">int</span> a, <span class="type">int</span> b)&#123; <span class="keyword">return</span> a % b;&#125;</span><br><span class="line"><span class="comment">// 函数对象类</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">divide</span>&#123;</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="type">int</span> denominator, <span class="type">int</span> divisor)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> denominator/divisor;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">auto</span> sub = [](<span class="type">int</span> i, <span class="type">int</span> j)&#123; <span class="keyword">return</span> i - j; &#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 上述各种可调用对象虽然类型不同，但是共享了一种调用形式：</span></span><br><span class="line"><span class="comment">// int(int ,int)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// std::function就可以将上述类型保存起来</span></span><br><span class="line">std::function&lt;<span class="type">int</span>(<span class="type">int</span>, <span class="type">int</span>)&gt; a = add; </span><br><span class="line">std::function&lt;<span class="type">int</span>(<span class="type">int</span>, <span class="type">int</span>)&gt; b = mod ; </span><br><span class="line">std::function&lt;<span class="type">int</span>(<span class="type">int</span>, <span class="type">int</span>)&gt; c = <span class="built_in">divide</span>();</span><br><span class="line">std::function&lt;<span class="type">int</span>(<span class="type">int</span>, <span class="type">int</span>)&gt; d = sub;</span><br></pre></td></tr></table></figure>
+
+<p>由于可调用对象定义五花八门，c++11提供了<code>std::function</code>和<code>std::bind</code>来统一可调用对象的各种操作</p>
+<h2 id="std-function"><a href="#std-function" class="headerlink" title="std::function"></a>std::function</h2><ul>
+<li>定义：std::function<T> .   是一个类模板，是一个可调用对象包装器。T是函数类型</li>
+<li>可以使用统一的方式处理函数&#x2F;函数对象&#x2F;函数指针，并允许保存和延迟他它们的执行</li>
+<li>可以取代函数指针的使用，因为它可以延迟函数的执行，特别适合作为回调函数使用。它比普通函数指针更加的灵活和便利</li>
+</ul>
+<h2 id="std-bind"><a href="#std-bind" class="headerlink" title="std::bind"></a>std::bind</h2><ul>
+<li>是一个通用的函数适配器。接受一个可调用对象，生成一个新的可调用对象来”适应”原对象的参数列表</li>
+<li>将可调用对象和参数绑定，绑定后的结果可以使用std::function保存</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 返回一个基于f的函数对象，其参数被绑定到args上</span></span><br><span class="line"><span class="function"><span class="keyword">template</span>&lt; <span class="keyword">class</span> F, <span class="keyword">class</span>... Args &gt;</span></span><br><span class="line"><span class="function"><span class="title">bind</span><span class="params">( F&amp;&amp; f, Args&amp;&amp;... args )</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>用法示例：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">double</span> <span class="title">my_divide</span> <span class="params">(<span class="type">double</span> x, <span class="type">double</span> y)</span> </span>&#123;<span class="keyword">return</span> x/y;&#125;</span><br><span class="line"><span class="comment">// _1表示占位符，位于&lt;functional&gt;中，std::placeholders::_1；</span></span><br><span class="line"><span class="keyword">auto</span> fn_half = std::<span class="built_in">bind</span> (my_divide, _1, <span class="number">2</span>);</span><br><span class="line">std::cout &lt;&lt; <span class="built_in">fn_half</span>(<span class="number">10</span>) &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;                        <span class="comment">// 5</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 绑定成员函数</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Foo</span> &#123;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">print_sum</span><span class="params">(<span class="type">int</span> n1, <span class="type">int</span> n2)</span> </span>&#123;</span><br><span class="line">        std::cout &lt;&lt; n1+n2 &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> data = <span class="number">10</span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span>  </span>&#123;</span><br><span class="line">    Foo foo;</span><br><span class="line">    <span class="keyword">auto</span> f = std::<span class="built_in">bind</span>(&amp;Foo::print_sum, &amp;foo, <span class="number">95</span>, std::placeholders::_1);</span><br><span class="line">    <span class="built_in">f</span>(<span class="number">5</span>); <span class="comment">// 100</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 绑定引用参数要用std::ref</span></span><br><span class="line"><span class="function">ostream &amp; <span class="title">print</span><span class="params">(ostream &amp;os, <span class="type">const</span> string&amp; s, <span class="type">char</span> c)</span> </span>&#123;</span><br><span class="line">    os &lt;&lt; s &lt;&lt; c;</span><br><span class="line">    <span class="keyword">return</span> os;</span><br><span class="line">&#125;</span><br><span class="line">ostringstream os;</span><br><span class="line"><span class="type">char</span> c = <span class="string">&#x27; &#x27;</span>;</span><br><span class="line">std::<span class="built_in">bind</span>(print, std::<span class="built_in">ref</span>(os1), _1, c)</span><br></pre></td></tr></table></figure>
+
+<p>绑定类成员函数时：</p>
+<ul>
+<li>第一个参数表示对象的成员函数的指针，第二个参数表示对象的地址</li>
+<li>必须显示指定&amp;Foo::print_sum，编译器不会将对象成员函数隐式转换成函数指针，所以必须加&amp;</li>
+<li>使用对象成员函数的指针时，必须知道该指针属于哪个对象，因此第二个参数为对象地址&amp;foo；如果在类内部，地址用this指针</li>
+</ul>
+<p>成员函数的指针的定义和使用</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Foo</span> &#123;</span><br><span class="line">    <span class="type">int</span> value;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">f</span><span class="params">()</span> </span>&#123; std::cout &lt;&lt; <span class="string">&quot;f(&quot;</span> &lt;&lt; <span class="keyword">this</span>-&gt;value &lt;&lt; <span class="string">&quot;)\n&quot;</span>; &#125;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">g</span><span class="params">()</span> </span>&#123; std::cout &lt;&lt; <span class="string">&quot;g(&quot;</span> &lt;&lt; <span class="keyword">this</span>-&gt;value &lt;&lt; <span class="string">&quot;)\n&quot;</span>; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">apply</span><span class="params">(Foo* foo1, Foo* foo2, <span class="type">void</span> (Foo::*fun)())</span> </span>&#123;</span><br><span class="line">    (foo1-&gt;*fun)();  <span class="comment">// call fun on the object foo1</span></span><br><span class="line">    (foo2-&gt;*fun)();  <span class="comment">// call fun on the object foo2</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Foo foo1&#123;<span class="number">1</span>&#125;;</span><br><span class="line">    Foo foo2&#123;<span class="number">2</span>&#125;;</span><br><span class="line">    <span class="built_in">apply</span>(&amp;foo1, &amp;foo2, &amp;Foo::f);</span><br><span class="line">    <span class="built_in">apply</span>(&amp;foo1, &amp;foo2, &amp;Foo::g);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>成员函数指针的定义：void (Foo::*fun)()，调用是传递的实参: &amp;Foo::f</li>
+<li>fun为类成员函数指针，所以调用是要通过解引用的方式获取成员函数*fun,即<code>(foo1-&gt;*fun)();</code></li>
+</ul>
+<h1 id="std-forward"><a href="#std-forward" class="headerlink" title="std::forward"></a>std::forward</h1><p>完美转发，实现了参数在传递过程中保持其值属性的功能</p>
+<p>即若是左值，则传递之后仍是左值；若是右值，则传递之后仍是右值</p>
+<h1 id="自动类型推导"><a href="#自动类型推导" class="headerlink" title="自动类型推导"></a>自动类型推导</h1><p>auto decltype typeid（b).name()比较</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/11/26/hello-world/" data-id="clpfn8zwi0000xotg7bnlea6g" data-title="XJW" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">November 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/11/26/hello-world/">XJW</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
